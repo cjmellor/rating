@@ -17,7 +17,6 @@
     ],
     "require": {
         "php": "^8.1",
-        "spatie/laravel-package-tools": "^1.9.2",
         "illuminate/contracts": "^9.0"
     },
     "require-dev": {
@@ -40,7 +39,6 @@
         }
     },
     "scripts": {
-        "analyse": "vendor/bin/phpstan analyse",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
         "format": "vendor/bin/pint"
