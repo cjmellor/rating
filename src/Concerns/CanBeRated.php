@@ -68,7 +68,7 @@ trait CanBeRated
      */
     public function ratingPercent($maxRating): float|int
     {
-        throw_if(condition: $maxRating > config(key: 'rating.max_rating'), exception: MaxRatingException::class);
+        throw_if(condition: $maxRating > config(key: 'rating.max_rating', default: 5), exception: MaxRatingException::class);
 
         return ($this->ratedInTotal * $maxRating) > 0
             ? $this->sumRating / (($this->ratedInTotal * $maxRating) / 100)
@@ -84,9 +84,9 @@ trait CanBeRated
     {
         return Attribute::make(
             get: fn () => $this->ratings()
-                ->whereNotNull(config(key: 'rating.users.primary_key'))
-                ->groupBy(config(key: 'rating.users.primary_key'))
-                ->pluck(config(key: 'rating.users.primary_key'))
+                ->whereNotNull(config(key: 'rating.users.primary_key', default: 'user_id'))
+                ->groupBy(config(key: 'rating.users.primary_key', default: 'user_id'))
+                ->pluck(config(key: 'rating.users.primary_key', default: 'user_id'))
                 ->count()
         );
     }
@@ -136,7 +136,7 @@ trait CanBeRated
     {
         return Attribute::make(
             get: fn () => $this->ratings()
-                ->where(config(key: 'rating.users.primary_key'), auth()->id())
+                ->where(config(key: 'rating.users.primary_key', default: 'user_id'), auth()->id())
                 ->avg(column: 'rating')
         );
     }
@@ -150,7 +150,7 @@ trait CanBeRated
     {
         return Attribute::make(
             get: fn () => $this->ratings()
-                ->where(config(key: 'rating.users.primary_key'), auth()->id())
+                ->where(config(key: 'rating.users.primary_key', default: 'user_id'), auth()->id())
                 ->sum(column: 'rating')
         );
     }
