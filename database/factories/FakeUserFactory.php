@@ -12,8 +12,8 @@ class FakeUserFactory extends Factory
     public function definition(): array
     {
         return [
-            'username' => fake()->userName,
-            'password' => fake()->password,
+            'username' => 'Chris',
+            'password' => 'password',
         ];
     }
 }
