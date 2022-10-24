@@ -4,7 +4,9 @@ namespace Cjmellor\Rating\Tests;
 
 use Cjmellor\Rating\RatingServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Schema;
 
 class TestCase extends Orchestra
 {
@@ -28,10 +30,14 @@ class TestCase extends Orchestra
     {
         config()->set('database.default', 'testing');
 
-        $migration = include __DIR__.'/../database/migrations/create_rating_table.php';
-        $fakeMigration = include __DIR__.'/../tests/database/migrations/create_fake_users_table.php';
+        $migration = include __DIR__.'/../database/migrations/create_ratings_table.php';
 
         $migration->up();
-        $fakeMigration->up();
+
+        Schema::create(table: 'fake_users', callback: function (Blueprint $table) {
+            $table->id();
+            $table->string(column: 'username');
+            $table->string(column: 'password');
+        });
     }
 }
