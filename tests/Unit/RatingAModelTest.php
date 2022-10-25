@@ -14,8 +14,8 @@ uses(RefreshDatabase::class);
 beforeEach(closure: function (): void {
     // Create 2 fake Users' and persist to the Database
     [$this->user, $this->secondUser] = FakeUser::factory()->times(count: 2)->create([
-        'username' => 'Chris',
-        'password' => 'password',
+        'username' => fake()->userName,
+        'password' => fake()->password,
     ]);
 });
 
