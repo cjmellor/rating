@@ -155,7 +155,7 @@ public string $textSize = 'text-2xl',
 > 
 > The component uses FontAwesome to generate the stars. You can use any icon library that supports using Unicode.
 
-> "What about a component that allows you to rate a Model on the front-end?"
+#### **"What about a component that allows you to rate a Model on the front-end?"**
 
 That is out of the scope of this package. I may consider it in the future, or I am happy to receive a PR to add it.
 
