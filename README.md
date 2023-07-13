@@ -1,8 +1,6 @@
 # A Laravel package that allows for ratings to be added to a Model
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/cjmellor/rating.svg?style=flat-square)](https://packagist.org/packages/cjmellor/rating)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/cjmellor/rating/run-tests?label=tests)](https://github.com/cjmellor/rating/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/cjmellor/rating/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/cjmellor/rating/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/cjmellor/rating.svg?style=flat-square)](https://packagist.org/packages/cjmellor/rating)
 
 Imagine you have a Recipes Model and you want to have your Users' rate your culinary delights. This package allows you to achieve this.
