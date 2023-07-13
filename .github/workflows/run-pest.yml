@@ -1,0 +1,43 @@
+name: "Run Tests"
+on:  
+  push:    
+    branches:
+      - 'main'
+  pull_request:    
+    branches:
+      - '*'
+
+jobs:  
+  tests:    
+    runs-on: ubuntu-latest
+    strategy:      
+      fail-fast: true      
+      matrix:        
+        php: [ 8.2, 8.1 ]        
+        laravel: [ 10, 9 ]        
+        stability: [ prefer-lowest, prefer-stable ]        
+
+    name: "PHP: v${{ matrix.php }} / Laravel: v${{ matrix.laravel }} - ${{ matrix.stability }}"
+    
+    steps:      
+      - name: Checkout        
+        uses: actions/checkout@v3
+      
+      - name: Setup PHP        
+        uses: shivammathur/setup-php@v2        
+        with:          
+          php-version: ${{ matrix.php }}          
+          tools: composer:v2          
+          coverage: none
+
+      - name: Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+          
+      - name: Install dependencies
+        run: |
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+          
+      - name: Execute tests
+        run: composer test
