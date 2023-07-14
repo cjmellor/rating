@@ -5,9 +5,6 @@ use Cjmellor\Rating\Exceptions\MaxRatingException;
 use Cjmellor\Rating\Models\Rating;
 use Cjmellor\Rating\Tests\Models\FakeUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use function Pest\Laravel\actingAs;
-use function Pest\Laravel\assertDatabaseCount;
-use function Pest\Laravel\assertDatabaseHas;
 
 uses(RefreshDatabase::class);
 
@@ -34,14 +31,14 @@ test(description: 'a Model can be rated', closure: function () {
 
 test(description: 'a logged in User can rate a Model', closure: function () {
     // log in as the fake User and assert the fake User is logged in
-    actingAs($this->secondUser)
+    $this->actingAs($this->secondUser)
         ->assertAuthenticatedAs($this->secondUser);
 
     // rate the fake User
     $this->user->rate(3);
 
     // assert the 'ratings' table has the record
-    assertDatabaseHas(table: Rating::class, data: [
+    $this->assertDatabaseHas(table: Rating::class, data: [
         'rateable_type' => 'Cjmellor\Rating\Tests\Models\FakeUser',
         'rateable_id' => 1,
         'user_id' => $this->secondUser->id,
@@ -52,7 +49,7 @@ test(description: 'a logged in User can rate a Model', closure: function () {
 test(description: 'a User cannot rate a Model more than once', closure: function () {
     // a logged-in User is required
     // sanity check that it logs in
-    actingAs($this->user)
+    $this->actingAs($this->user)
         ->assertAuthenticated();
 
     // First, lets rate a User
@@ -62,7 +59,7 @@ test(description: 'a User cannot rate a Model more than once', closure: function
     $this->user->rate(score: 5);
 
     // assert that the 'ratings' table only has the one record
-    assertDatabaseCount(table: Rating::class, count: 1);
+    $this->assertDatabaseCount(table: Rating::class, count: 1);
 })->throws(exception: CannotBeRatedException::class, exceptionMessage: 'Cannot be rated more than once');
 
 test(description: 'the amount of times a Model has been rated by a User', closure: function () {
@@ -70,7 +67,7 @@ test(description: 'the amount of times a Model has been rated by a User', closur
     $user = FakeUser::factory()->createOne();
 
     // log in as a User and assert it's logged in
-    actingAs($this->user)
+    $this->actingAs($this->user)
         ->assertAuthenticated();
 
     // Rate a User
@@ -90,7 +87,7 @@ test(description: 'a Model can be rated by unauthorized Users', closure: functio
     expect($user->ratedInTotal)->toBe(expected: 1);
 
     // and the User is null
-    assertDatabaseHas(table: Rating::class, data: [
+    $this->assertDatabaseHas(table: Rating::class, data: [
         'user_id' => null,
         'rating' => 3,
     ]);
@@ -101,13 +98,13 @@ test(description: 'the correct percentage of rated Models are calculated', closu
     $user = FakeUser::factory()->createOne();
 
     // login as Fake User one and rate the User
-    actingAs($this->user)
+    $this->actingAs($this->user)
         ->assertAuthenticated();
 
     $user->rate(score: 5);
 
     // now login as the Second User
-    actingAs($this->secondUser)
+    $this->actingAs($this->secondUser)
         ->assertAuthenticated();
 
     // and rate the User lower than the previous
@@ -128,7 +125,7 @@ test(description: 'a Models rating percentage cannot exceed the specified max ra
     $user = FakeUser::factory()->createOne();
 
     // login and use User one to rate the User
-    actingAs($this->user);
+    $this->actingAs($this->user);
     $user->rate(score: 5);
 
     // show the rating percentage
