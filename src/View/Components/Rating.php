@@ -22,10 +22,13 @@ class Rating extends Component
     ) {
     }
 
+    public function rate($rating): void
+    {
+        dd('rated', $rating);
+    }
+
     /**
      * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View
      */
     public function render(): View
     {
