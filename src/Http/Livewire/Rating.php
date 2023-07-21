@@ -9,6 +9,7 @@ use Livewire\Component;
 class Rating extends Component
 {
     public string $iconBgColor = 'text-yellow-300';
+
     public string $iconFgColor = 'text-yellow-400';
 
     public $hoverValue = 0;
@@ -18,6 +19,7 @@ class Rating extends Component
     public string $iconFg = 'fas fa-star';
 
     public Model $model;
+
     public bool $modelRated;
 
     public float $score = 0;

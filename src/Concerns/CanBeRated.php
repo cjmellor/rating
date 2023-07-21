@@ -53,14 +53,6 @@ trait CanBeRated
     }
 
     /**
-     * Determine that the Model has been rated by a User.
-     */
-    public function ratedByUser(): bool
-    {
-        return $this->ratings()->where(column: 'user_id', operator: '=', value: auth()->id())->exists();
-    }
-
-    /**
      * Get the rating for a Model.
      */
     public function ratings(): MorphMany
