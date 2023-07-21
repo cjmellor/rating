@@ -2,21 +2,30 @@
 
 namespace Cjmellor\Rating\Http\Livewire;
 
-use Cjmellor\Rating\Exceptions\CannotBeRatedException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 
 class Rating extends Component
 {
-    public string $color = 'text-yellow-400';
+    public string $iconBgColor = 'text-yellow-300';
+    public string $iconFgColor = 'text-yellow-400';
+
     public $hoverValue = 0;
+
     public string $iconBg = 'far fa-star';
+
     public string $iconFg = 'fas fa-star';
+
     public Model $model;
+    public bool $modelRated;
+
     public float $score = 0;
+
     public string $size = 'text-base';
+
     public int $starRating;
+
     public bool $static = false;
 
     public function mount(): void
@@ -30,9 +39,26 @@ class Rating extends Component
     {
         $this->model->rate($value);
 
+        $this->hoverValue = 0;
+
+        $this->modelRated = true;
+
         $this->score = $this->model->ratingPercent();
 
         $this->static = true;
+    }
+
+    public function undoRating(): void
+    {
+        $this->model->unrate();
+
+        if ($this->modelRated) {
+            $this->modelRated = false;
+        }
+
+        $this->score = $this->model->ratingPercent();
+
+        $this->static = false;
     }
 
     public function getStarWidth($index): int
@@ -52,6 +78,13 @@ class Rating extends Component
         }
 
         return 0;
+    }
+
+    public function ratingCanBeChanged(): bool
+    {
+        return $this->static
+            && auth()->check()
+            && config(key: 'rating.undo_rating');
     }
 
     public function render(): View

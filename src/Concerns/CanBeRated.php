@@ -33,6 +33,13 @@ trait CanBeRated
         return $this->ratings()->save(model: $rating);
     }
 
+    public function unrate(): bool
+    {
+        return $this->ratings()
+            ->where(column: 'user_id', operator: '=', value: auth()->id())
+            ->delete();
+    }
+
     /**
      * A check to see if the User has already rated the Model.
      */
@@ -43,6 +50,14 @@ trait CanBeRated
             types: '*',
             callback: fn (Builder $query): Builder => $query->where(column: 'user_id', operator: '=', value: auth()->id())
         )->exists();
+    }
+
+    /**
+     * Determine that the Model has been rated by a User.
+     */
+    public function ratedByUser(): bool
+    {
+        return $this->ratings()->where(column: 'user_id', operator: '=', value: auth()->id())->exists();
     }
 
     /**
