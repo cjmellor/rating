@@ -61,6 +61,8 @@ return [
     ],
 
     'max_rating' => 5,
+    
+    'undo_rating' => true,
 ];
 ```
 
@@ -79,7 +81,7 @@ class Recipe extends Model
 }
 ```
 
-Now you can rate this Model:
+**Rate the Model**
 
 ```php
 $recipe = Recipe::find(1);
@@ -87,12 +89,10 @@ $recipe = Recipe::find(1);
 $recipe->rate(score: 2);
 ```
 
-You can view how many ratings a particular Model has:
+**View Models' ratings**
 
 ```php
 $recipe->ratings;
-
-// this will return a Collection
 ```
 
 You can get an overall percentage of the amount of Users' who have rated a Model:
@@ -107,6 +107,22 @@ $recipe->ratingPercent(maxLength: 5);
 
 This will equate to 80%. A float is returned. Changing the `maxLength` will recalculate the percentage.
 
+You could then use this percentage for the `score` attribute of the component.
+
+> **Note**
+> 
+> By default, the `maxLength` is determined by a config option. You can override this by passing a value to the method.
+
+**Unrating Models**
+
+By default, you can unrate a Model. If you don't want Users' to unrate Models, set the `undo_rating` config option to true.
+
+To unrate a Model, you can use the `unrate` method:
+
+```php
+$recipe->unrate();
+```
+
 The package comes with a bunch of Attributes that you can use. _The results of these are based off a single Model been rated by two Users' with a `3` and ` 5` rating._
 
 ```php
@@ -118,44 +134,33 @@ $recipe->ratedInTotal; // 2
 $recipe->sumRating; // "8" 
 ```
 
-### Blade Component
+### Livewire Component
 
-The package comes with an optional blade component for displaying the Models' rating.
+To see the ratings in action, you can use the Livewire component. This allows you to show the ratings on the front-end statically and let the User's rate the Model by clicking on the stars.
 
 > **Warning**
 > 
-> You must have both TailwindCSS and FontAwesome installed, though FontAwesome can be replaced with your own preferred icon set**
+> You must have both Tailwind CSS and Font Awesome installed, though Font Awesome can be replaced with your own preferred icon set
 
-You must publish the file to get access to it
-
-```shell
-php artisan vendor:publish --tag="rating-component"
-```
-
-You can now use the new component:
+**Use the component**
 
 ```html
-<x-show-rating score="80.0" />
+<livewire:rating size="text-7xl" score="55" :model="$recipe" />
 ```
 
-The component has customisable attributes:
+The component has customisable attributes, including:
 
 ```php
-public string $color = 'text-yellow-400',
-public string $family = 'FontAwesome',
-public $innerStars = '\f005 \f005 \f005 \f005 \f005',
-public $outerStars = '\f006 \f006 \f006 \f006 \f006',
-public float $score = 0.0,
-public string $textSize = 'text-2xl',
+public string $iconBgColor = 'text-yellow-300';
+public string $iconFgColor = 'text-yellow-400';
+public string $iconBg = 'far fa-star';
+public string $iconFg = 'fas fa-star';
+public float $score = 0;
+public string $size = 'text-base';
+public bool $static = false;
 ```
 
-> **Info**
-> 
-> The component uses FontAwesome to generate the stars. You can use any icon library that supports using Unicode.
-
-#### **"What about a component that allows you to rate a Model on the front-end?"**
-
-That is out of the scope of this package. I may consider it in the future, or I am happy to receive a PR to add it.
+If you have the config for unrating a Model set to `true`, an icon shows that allows you to unrate the Model. 
 
 ## Testing
 
@@ -167,15 +172,6 @@ composer test
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
-## Contributing
-
-Please see [CONTRIBUTING](https://github.com/cjmellor/.github/blob/main/CONTRIBUTING.md) for details.
-
-## Credits
-
-- [Chris Mellor](https://github.com/cjmellor)
-- [All Contributors](../../contributors)
-
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT Licence (MIT). Please see [Licence File](LICENSE.md) for more information.

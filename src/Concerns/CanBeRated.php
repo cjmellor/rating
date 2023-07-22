@@ -15,7 +15,6 @@ trait CanBeRated
     /**
      * Rate a Model.
      *
-     * @param  int  $score
      * @return \Illuminate\Database\Eloquent\Model|false
      *
      * @throws \Cjmellor\Rating\Exceptions\CannotBeRatedException
@@ -34,12 +33,17 @@ trait CanBeRated
         return $this->ratings()->save(model: $rating);
     }
 
+    public function unrate(): bool
+    {
+        return $this->ratings()
+            ->where(column: 'user_id', operator: '=', value: auth()->id())
+            ->delete();
+    }
+
     /**
      * A check to see if the User has already rated the Model.
-     *
-     * @return bool
      */
-    protected function alreadyRated(): bool
+    public function alreadyRated(): bool
     {
         return $this->ratings()->whereHasMorph(
             relation: 'rateable',
@@ -50,8 +54,6 @@ trait CanBeRated
 
     /**
      * Get the rating for a Model.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function ratings(): MorphMany
     {
@@ -61,24 +63,22 @@ trait CanBeRated
     /**
      * Get the all-round percentage of a rated Model.
      *
-     * @param $maxRating
-     * @return float|int
      *
      * @throws \Throwable
      */
-    public function ratingPercent($maxRating): float|int
+    public function ratingPercent($maxRating = null): float|int
     {
-        throw_if(condition: $maxRating > config(key: 'rating.max_rating', default: 5), exception: MaxRatingException::class);
+        $maxRating ??= config(key: 'rating.max_rating');
 
-        return ($this->ratedInTotal * $maxRating) > 0
-            ? $this->sumRating / (($this->ratedInTotal * $maxRating) / 100)
+        throw_if(condition: $maxRating > config(key: 'rating.max_rating'), exception: MaxRatingException::class);
+
+        return ($this->rated_in_total * $maxRating) > 0
+            ? $this->sum_rating / (($this->rated_in_total * $maxRating) / 100)
             : 0;
     }
 
     /**
      * The amount of times a Model has been rated by Users'.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     protected function ratedByUsers(): Attribute
     {
@@ -93,8 +93,6 @@ trait CanBeRated
 
     /**
      * The amount of times a Model has been rated in total.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     protected function ratedInTotal(): Attribute
     {
@@ -105,8 +103,6 @@ trait CanBeRated
 
     /**
      * Get the average rating for a Model
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     protected function averageRating(): Attribute
     {
@@ -117,8 +113,6 @@ trait CanBeRated
 
     /**
      * Get the rating sum for a Model
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     protected function sumRating(): Attribute
     {
@@ -129,8 +123,6 @@ trait CanBeRated
 
     /**
      * Get the average rating for a Model rated by Users.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     protected function averageRatingByUser(): Attribute
     {
@@ -143,8 +135,6 @@ trait CanBeRated
 
     /**
      * Get the rating sum for a Model rated by Users.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     protected function averageSumOfUser(): Attribute
     {
