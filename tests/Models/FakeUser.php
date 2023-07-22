@@ -12,11 +12,6 @@ class FakeUser extends User
     use HasFactory;
 
     /**
-     * @var array
-     */
-    protected $guarded = [];
-
-    /**
      * @var bool
      */
     public $timestamps = false;

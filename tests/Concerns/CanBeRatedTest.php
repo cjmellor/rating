@@ -4,17 +4,6 @@ use Cjmellor\Rating\Exceptions\CannotBeRatedException;
 use Cjmellor\Rating\Exceptions\MaxRatingException;
 use Cjmellor\Rating\Models\Rating;
 use Cjmellor\Rating\Tests\Models\FakeUser;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
-
-beforeEach(closure: function (): void {
-    // Create 2 fake Users' and persist to the Database
-    [$this->user, $this->secondUser] = FakeUser::factory()->times(count: 2)->create([
-        'username' => fake()->userName,
-        'password' => fake()->password,
-    ]);
-});
 
 test(description: 'a Model can be rated', closure: function () {
     // Create a Rating and attach to a fake User
@@ -94,6 +83,8 @@ test(description: 'a Model can be rated by unauthorized Users', closure: functio
 });
 
 test(description: 'the correct percentage of rated Models are calculated', closure: function () {
+    config(['rating.max_rating' => 5]);
+
     // create a User to rate
     $user = FakeUser::factory()->createOne();
 
@@ -111,7 +102,7 @@ test(description: 'the correct percentage of rated Models are calculated', closu
     $user->rate(score: 3);
 
     // now assert the correct percentage, based on a rating system of 5
-    expect($user->ratingPercent(maxRating: 5))
+    expect($user->ratingPercent())
         ->toBe(expected: 80.0)
         ->and(value: 80.0)
         ->toBeFloat();
@@ -131,3 +122,25 @@ test(description: 'a Models rating percentage cannot exceed the specified max ra
     // show the rating percentage
     $user->ratingPercent(maxRating: 5);
 })->throws(exception: MaxRatingException::class, exceptionMessage: 'Maximum rating cannot be more than 4');
+
+test(description: 'a Model can be unrated', closure: function () {
+    $this->actingAs($this->secondUser)->assertAuthenticated();
+
+    $this->user->rate(score: 5);
+
+    $this->assertDatabaseHas(table: Rating::class, data: [
+        'rateable_type' => 'Cjmellor\Rating\Tests\Models\FakeUser',
+        'rateable_id' => 1,
+        'user_id' => 2,
+        'rating' => 5,
+    ]);
+
+    $this->user->unrate();
+
+    $this->assertDatabaseMissing(table: Rating::class, data: [
+        'rateable_type' => 'Cjmellor\Rating\Tests\Models\FakeUser',
+        'rateable_id' => 1,
+        'user_id' => 2,
+        'rating' => 5,
+    ]);
+});

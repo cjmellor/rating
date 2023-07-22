@@ -8,12 +8,7 @@ use Livewire\Livewire;
 
 class RatingServiceProvider extends ServiceProvider
 {
-    public function register()
-    {
-        //
-    }
-
-    public function boot()
+    public function boot(): void
     {
         $this->publishes([
             __DIR__.'/../config/rating.php' => config_path('rating.php'),
