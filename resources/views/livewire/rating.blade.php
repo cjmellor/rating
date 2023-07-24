@@ -19,7 +19,7 @@
         </div>
     @endfor
 
-    @if($modelRated)
+    @if($modelRated && $showSuccess)
         <div class="ml-6">
             <i class="fas fa-circle-check text-green-500 {{ $size }}"></i>
         </div>
