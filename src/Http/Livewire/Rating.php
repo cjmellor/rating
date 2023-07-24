@@ -8,13 +8,13 @@ use Livewire\Component;
 
 class Rating extends Component
 {
-    public string $iconBgColor = 'text-yellow-300';
-
-    public string $iconFgColor = 'text-yellow-400';
-
     public $hoverValue = 0;
 
     public string $iconBg = 'far fa-star';
+
+    public string $iconBgColor = 'text-yellow-300';
+
+    public string $iconFgColor = 'text-yellow-400';
 
     public string $iconFg = 'fas fa-star';
 
@@ -23,6 +23,8 @@ class Rating extends Component
     public bool $modelRated;
 
     public float $score = 0;
+
+    public bool $showSuccess = true;
 
     public string $size = 'text-base';
 
@@ -40,8 +42,6 @@ class Rating extends Component
     public function setRating($value): void
     {
         $this->model->rate($value);
-
-        $this->hoverValue = 0;
 
         $this->modelRated = true;
 
