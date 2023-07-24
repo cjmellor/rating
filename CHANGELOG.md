@@ -2,6 +2,14 @@
 
 All notable changes to `rating` will be documented in this file.
 
+## v2.1.0 - 2023-07-24
+
+### What's Changed
+
+- feat: Add an Option to Omit Success Icon + New GA Workflow by @cjmellor in https://github.com/cjmellor/rating/pull/7
+
+**Full Changelog**: https://github.com/cjmellor/rating/compare/v2.0.0...v2.1.0
+
 ## v2.0.0 - 2023-07-22
 
 ### What's Changed
