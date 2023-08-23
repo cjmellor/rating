@@ -1,7 +1,9 @@
-# A Laravel package that allows for ratings to be added to a Model
-
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/cjmellor/rating.svg?style=flat-square)](https://packagist.org/packages/cjmellor/rating)
-[![Total Downloads](https://img.shields.io/packagist/dt/cjmellor/rating.svg?style=flat-square)](https://packagist.org/packages/cjmellor/rating)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/cjmellor/rating?color=rgb%2856%20189%20248%29&label=release&style=for-the-badge)](https://packagist.org/packages/cjmellor/rating)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/cjmellor/rating/run-pest.yml?branch=main&label=tests&style=for-the-badge&color=rgb%28134%20239%20128%29)](https://github.com/cjmellor/rating/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/cjmellor/rating.svg?color=rgb%28249%20115%2022%29&style=for-the-badge)](https://packagist.org/packages/cjmellor/rating)
+![Packagist PHP Version](https://img.shields.io/packagist/dependency-v/cjmellor/rating/php?color=rgb%28165%20180%20252%29&logo=php&logoColor=rgb%28165%20180%20252%29&style=for-the-badge)
+![Laravel Version](https://img.shields.io/badge/laravel-^9-rgb(235%2068%2050)?style=for-the-badge&logo=laravel)
+![Livewire Version](https://img.shields.io/badge/livewire-^2-rgba(251,%20112,%20169,%201)?style=for-the-badge&logo=livewire&labelColor=rgba(15,%2023,%2042,%201)&logoColor=rgba(251,%20112,%20169,%201))
 
 Imagine you have a Recipes Model and you want to have your Users' rate your culinary delights. This package allows you to achieve this.
 
