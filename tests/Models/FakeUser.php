@@ -15,4 +15,6 @@ class FakeUser extends User
      * @var bool
      */
     public $timestamps = false;
+
+    protected $table = 'users';
 }

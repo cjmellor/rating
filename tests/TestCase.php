@@ -15,15 +15,17 @@ class TestCase extends Orchestra
     {
         config()->set('database.default', 'testing');
 
-        $migration = include __DIR__.'/../database/migrations/create_ratings_table.php';
-
-        $migration->up();
-
-        Schema::create(table: 'fake_users', callback: function (Blueprint $table) {
+        Schema::create(table: 'users', callback: function (Blueprint $table) {
             $table->id();
             $table->string(column: 'username');
             $table->string(column: 'password');
         });
+
+        Schema::enableForeignKeyConstraints();
+
+        $migration = include __DIR__.'/../database/migrations/create_ratings_table.php';
+
+        $migration->up();
     }
 
     protected function setUp(): void
