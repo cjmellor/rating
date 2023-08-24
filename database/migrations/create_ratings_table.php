@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
             $table->morphs('rateable');
-            $table->foreignId((string) config(key: 'rating.users.primary_key', default: 'user_id'))->nullable()->constrained();
+            $table->foreignId((string) config(key: 'rating.users.primary_key', default: 'user_id'))->nullable()->constrained()->nullOnDelete();
             $table->integer('rating');
             $table->timestamps();
         });
