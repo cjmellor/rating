@@ -1,10 +1,10 @@
 <?php
 
-use Cjmellor\Rating\Models\Rating;
-use Illuminate\Support\Facades\DB;
-use Cjmellor\Rating\Tests\Models\FakeUser;
-use Cjmellor\Rating\Exceptions\MaxRatingException;
 use Cjmellor\Rating\Exceptions\CannotBeRatedException;
+use Cjmellor\Rating\Exceptions\MaxRatingException;
+use Cjmellor\Rating\Models\Rating;
+use Cjmellor\Rating\Tests\Models\FakeUser;
+use Illuminate\Support\Facades\DB;
 
 test(description: 'a Model can be rated', closure: function () {
     // Create a Rating and attach to a fake User
