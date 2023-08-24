@@ -2,6 +2,14 @@
 
 All notable changes to `rating` will be documented in this file.
 
+## v2.1.2 - 2023-08-24
+
+### What's Changed
+
+- Refactor rating and test code for better readability by @cjmellor in https://github.com/cjmellor/rating/pull/10
+
+**Full Changelog**: https://github.com/cjmellor/rating/compare/v2.1.1...v2.1.2
+
 ## v2.1.1 - 2023-08-24
 
 ### What's Changed
