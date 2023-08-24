@@ -1,6 +1,6 @@
 <?php
 
-namespace Cjmellor\Rating\Http\Livewire;
+namespace Cjmellor\Rating\Livewire;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;

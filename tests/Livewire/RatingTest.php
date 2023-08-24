@@ -1,6 +1,6 @@
 <?php
 
-use Cjmellor\Rating\Http\Livewire\Rating;
+use Cjmellor\Rating\Livewire\Rating;
 use Livewire\Livewire;
 
 beforeEach(closure: function (): void {
