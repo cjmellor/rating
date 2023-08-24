@@ -11,9 +11,6 @@ class FakeUser extends User
     use CanBeRated;
     use HasFactory;
 
-    /**
-     * @var bool
-     */
     public $timestamps = false;
 
     protected $table = 'users';

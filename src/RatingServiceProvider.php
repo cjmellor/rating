@@ -2,7 +2,7 @@
 
 namespace Cjmellor\Rating;
 
-use Cjmellor\Rating\Http\Livewire\Rating;
+use Cjmellor\Rating\Livewire\Rating;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 

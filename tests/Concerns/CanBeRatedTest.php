@@ -4,7 +4,6 @@ use Cjmellor\Rating\Exceptions\CannotBeRatedException;
 use Cjmellor\Rating\Exceptions\MaxRatingException;
 use Cjmellor\Rating\Models\Rating;
 use Cjmellor\Rating\Tests\Models\FakeUser;
-use Illuminate\Support\Facades\DB;
 
 test(description: 'a Model can be rated', closure: function () {
     // Create a Rating and attach to a fake User
@@ -117,7 +116,7 @@ test(description: 'a Models rating percentage cannot exceed the specified max ra
     $user = FakeUser::factory()->createOne();
 
     // login and use User one to rate the User
-    $this->actingAs($this->user);
+    $this->actingAs($this->user)->assertAuthenticated();
     $user->rate(score: 5);
 
     // show the rating percentage
@@ -139,7 +138,7 @@ test(description: 'a Model can be unrated', closure: function () {
     $this->user->unrate();
 
     $this->assertDatabaseMissing(table: Rating::class, data: [
-        'rateable_type' => 'Cjmellor\Rating\Tests\Models\FakeUser',
+        'rateable_type' => FakeUser::class,
         'rateable_id' => 1,
         'user_id' => 2,
         'rating' => 5,
@@ -158,7 +157,7 @@ test(description: 'user_id in rating table is set to null when the related user 
         'rating' => 4,
     ]);
 
-    DB::table('users')->where('id', $this->user->id)->delete();
+    FakeUser::first()->delete();
 
     $this->assertDatabaseHas(table: Rating::class, data: [
         'rateable_type' => 'Cjmellor\Rating\Tests\Models\FakeUser',
