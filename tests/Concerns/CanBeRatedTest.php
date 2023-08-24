@@ -1,9 +1,10 @@
 <?php
 
-use Cjmellor\Rating\Exceptions\CannotBeRatedException;
-use Cjmellor\Rating\Exceptions\MaxRatingException;
 use Cjmellor\Rating\Models\Rating;
+use Illuminate\Support\Facades\DB;
 use Cjmellor\Rating\Tests\Models\FakeUser;
+use Cjmellor\Rating\Exceptions\MaxRatingException;
+use Cjmellor\Rating\Exceptions\CannotBeRatedException;
 
 test(description: 'a Model can be rated', closure: function () {
     // Create a Rating and attach to a fake User
@@ -142,5 +143,27 @@ test(description: 'a Model can be unrated', closure: function () {
         'rateable_id' => 1,
         'user_id' => 2,
         'rating' => 5,
+    ]);
+});
+
+test(description: 'user_id in rating table is set to null when the related user is deleted', closure: function () {
+    $this->actingAs($this->user)->assertAuthenticated();
+
+    $this->secondUser->rate(score: 4);
+
+    $this->assertDatabaseHas(table: Rating::class, data: [
+        'rateable_type' => 'Cjmellor\Rating\Tests\Models\FakeUser',
+        'rateable_id' => $this->secondUser->id,
+        'user_id' => $this->user->id,
+        'rating' => 4,
+    ]);
+
+    DB::table('users')->where('id', $this->user->id)->delete();
+
+    $this->assertDatabaseHas(table: Rating::class, data: [
+        'rateable_type' => 'Cjmellor\Rating\Tests\Models\FakeUser',
+        'rateable_id' => $this->secondUser->id,
+        'user_id' => null,
+        'rating' => 4,
     ]);
 });
