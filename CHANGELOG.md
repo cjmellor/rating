@@ -2,6 +2,19 @@
 
 All notable changes to `rating` will be documented in this file.
 
+## v2.1.1 - 2023-08-24
+
+### What's Changed
+
+- build(deps): Bump aglipanci/laravel-pint-action from 2.2.0 to 2.3.0 by @dependabot in https://github.com/cjmellor/rating/pull/8
+- Add nullOnDelete() for the User-related foreignId column by @514sid in https://github.com/cjmellor/rating/pull/9
+
+### New Contributors
+
+- @514sid made their first contribution in https://github.com/cjmellor/rating/pull/9
+
+**Full Changelog**: https://github.com/cjmellor/rating/compare/v2.1.0...v2.1.1
+
 ## v2.1.0 - 2023-07-24
 
 ### What's Changed
