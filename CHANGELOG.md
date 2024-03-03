@@ -2,6 +2,18 @@
 
 All notable changes to `rating` will be documented in this file.
 
+## v2.2.0 - 2024-03-03
+
+### What's Changed
+
+* build(deps): Bump actions/checkout from 3 to 4 by @dependabot in https://github.com/cjmellor/rating/pull/11
+* build(deps): Bump stefanzweifel/git-auto-commit-action from 4 to 5 by @dependabot in https://github.com/cjmellor/rating/pull/12
+* build(deps): Bump aglipanci/laravel-pint-action from 2.3.0 to 2.3.1 by @dependabot in https://github.com/cjmellor/rating/pull/13
+* Laravel 11.x Compatibility by @cjmellor in https://github.com/cjmellor/rating/pull/14
+* fix: Remove Livewire as a Required Dependency by @cjmellor in https://github.com/cjmellor/rating/pull/15
+
+**Full Changelog**: https://github.com/cjmellor/rating/compare/v2.1.2...v2.2.0
+
 ## v2.1.2 - 2023-08-24
 
 ### What's Changed
