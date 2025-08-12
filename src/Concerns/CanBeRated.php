@@ -25,7 +25,7 @@ trait CanBeRated
         // a User cannot rate the same Model twice...
         throw_if(condition: $this->alreadyRated(), exception: CannotBeRatedException::class);
 
-        $rating = new Rating();
+        $rating = new Rating;
 
         $rating->user_id = auth()->id();
         $rating->rating = $score;

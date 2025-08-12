@@ -4,7 +4,7 @@ namespace Cjmellor\Rating\Tests\Models;
 
 use Cjmellor\Rating\Concerns\CanBeRated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\{User};
+use Illuminate\Foundation\Auth\User;
 
 class FakeUser extends User
 {
