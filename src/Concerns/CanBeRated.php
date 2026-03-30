@@ -15,9 +15,9 @@ trait CanBeRated
     /**
      * Rate a Model.
      *
-     * @return \Illuminate\Database\Eloquent\Model|false
+     * @return Model|false
      *
-     * @throws \Cjmellor\Rating\Exceptions\CannotBeRatedException
+     * @throws CannotBeRatedException
      * @throws \Throwable
      */
     public function rate(int $score): Model|bool
